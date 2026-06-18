@@ -1,0 +1,13 @@
+.env
+node_modules/
+.DS_Store
+# eval: downloaded benchmark data (large) and python cache
+eval/spider/
+eval/spider_data/
+eval/spider.zip
+eval/**/__pycache__/
+eval/results_*.json
+# film: intermediate capture frames (GIFs are committed in assets/)
+film/frames/
+film/out/
+.claude/

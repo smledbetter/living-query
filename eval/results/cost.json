@@ -1,0 +1,20 @@
+{
+  "mercury-2": {
+    "session_input_tokens": 1515,
+    "session_output_tokens": 406,
+    "session_cost_usd": 0.000683,
+    "sessions_per_dollar": 1464
+  },
+  "haiku-4.5": {
+    "session_input_tokens": 1704,
+    "session_output_tokens": 445,
+    "session_cost_usd": 0.003929,
+    "sessions_per_dollar": 255
+  },
+  "opus-4.8": {
+    "session_input_tokens": 2488,
+    "session_output_tokens": 645,
+    "session_cost_usd": 0.028565,
+    "sessions_per_dollar": 35
+  }
+}

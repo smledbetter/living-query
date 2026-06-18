@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Living Query — comparison film</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { display: flex; justify-content: center; align-items: flex-start; padding: 18px; }
+    .stage {
+      width: 1000px; background: var(--bg); border-radius: 14px;
+      padding: 18px 20px 20px;
+    }
+    .film-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+    .film-head h1 { margin: 0; font-size: 20px; letter-spacing: -0.01em; }
+    #subtitle { color: var(--muted); font-size: 13px; }
+    .matchup { color: var(--muted); font-size: 13px; }
+    .matchup b { color: var(--ink); font-weight: 600; }
+    .matchup .vs { margin: 0 8px; color: var(--muted); }
+
+    .english-panel { margin-bottom: 12px; }
+    /* fixed height so the capture frame never changes size as lines accrue */
+    .english-box { height: 124px; overflow: hidden; }
+
+    .compare { margin-bottom: 0; }
+    .panel-head { align-items: center; }
+    .panel-head .left-meta { display: inline-flex; align-items: center; gap: 7px; }
+    .name { text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--ink); font-weight: 600; }
+    .clock {
+      font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: 12px;
+      color: var(--muted); letter-spacing: 0; text-transform: none; min-width: 52px; text-align: right;
+    }
+    .good-panel .clock { color: var(--good); }
+    .bad-panel .clock { color: var(--bad); }
+    .sql-box { min-height: 188px; }
+    .cap { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+    .price { font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: 11px; color: var(--muted); }
+    .gen-spinner-static::before { animation: none; opacity: 0.7; }
+    .foot-note { margin-top: 12px; color: var(--muted); font-size: 11px; }
+  </style>
+</head>
+<body>
+  <main class="stage" id="stage">
+    <div class="film-head">
+      <div>
+        <h1>Living Query</h1>
+        <div id="subtitle"></div>
+      </div>
+      <div class="matchup">
+        <b id="title-left"></b><span class="vs">vs</span><b id="title-right"></b>
+      </div>
+    </div>
+
+    <section class="panel english-panel">
+      <div class="panel-head">You say</div>
+      <div id="english" class="english-box"></div>
+    </section>
+
+    <section class="compare">
+      <div class="panel sql good-panel">
+        <div class="panel-head">
+          <span class="left-meta">
+            <span class="name" id="name-left"></span>
+            <span class="badge good" id="badge-left"></span>
+            <span class="diffstat" id="stat-left"></span>
+          </span>
+          <span class="clock" id="clock-left"></span>
+        </div>
+        <pre id="sql-left" class="sql-box"></pre>
+        <div class="cap good-cap">
+          <span>pins what did not change</span>
+          <span class="price" id="price-left"></span>
+        </div>
+      </div>
+
+      <div class="panel sql bad-panel">
+        <div class="panel-head">
+          <span class="left-meta">
+            <span class="name" id="name-right"></span>
+            <span class="badge bad" id="badge-right"></span>
+            <span class="diffstat" id="stat-right"></span>
+          </span>
+          <span class="clock" id="clock-right"></span>
+        </div>
+        <pre id="sql-right" class="sql-box"></pre>
+        <div class="cap bad-cap">
+          <span>blanks and repaints the whole answer</span>
+          <span class="price" id="price-right"></span>
+        </div>
+      </div>
+    </section>
+
+    <p class="foot-note">Clocks are measured median latency to the finished query. blogs.noaa, ClickHouse playground.</p>
+  </main>
+
+  <script type="module" src="src/film.js"></script>
+</body>
+</html>

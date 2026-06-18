@@ -1,0 +1,370 @@
+{
+  "model": "mercury",
+  "n": 1034,
+  "valid": 1025,
+  "correct": 757,
+  "exec_acc": 0.7321083172147002,
+  "seconds": 356.05904603004456,
+  "fails": [
+    {
+      "i": 6,
+      "db": "concert_singer",
+      "kind": "WRONG",
+      "q": "Show the name and the release year of the song by the youngest singer.",
+      "gold": "SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1",
+      "pred": "SELECT s.Name, s.Song_release_year\nFROM singer s\nWHERE s.Age = (SELECT MIN(Age) FROM singer)",
+      "msg": ""
+    },
+    {
+      "i": 16,
+      "db": "concert_singer",
+      "kind": "WRONG",
+      "q": "What is the maximum capacity and the average of all stadiums ?",
+      "gold": "select max(capacity), average from stadium",
+      "pred": "SELECT MAX(Capacity) AS max_capacity, AVG(Capacity) AS average_capacity FROM stadium",
+      "msg": ""
+    },
+    {
+      "i": 22,
+      "db": "concert_singer",
+      "kind": "WRONG",
+      "q": "Show the stadium name and the number of concerts in each stadium.",
+      "gold": "SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id",
+      "pred": "SELECT stadium.Name AS stadium_name, COUNT(concert.concert_ID) AS concert_count\nFROM stadium\nLEFT JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID\nGROUP BY stadium.Stadium_ID, stadium.Name",
+      "msg": ""
+    },
+    {
+      "i": 23,
+      "db": "concert_singer",
+      "kind": "WRONG",
+      "q": "For each stadium, how many concerts play there?",
+      "gold": "SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id",
+      "pred": "SELECT s.Stadium_ID, COUNT(c.concert_ID) AS concert_count\nFROM stadium s\nLEFT JOIN concert c ON s.Stadium_ID = c.Stadium_ID\nGROUP BY s.Stadium_ID",
+      "msg": ""
+    },
+    {
+      "i": 30,
+      "db": "concert_singer",
+      "kind": "WRONG",
+      "q": "Show countries where a singer above age 40 and a singer below 30 are from.",
+      "gold": "SELECT country FROM singer WHERE age  >  40 INTERSECT SELECT country FROM singer WHERE age  <  30",
+      "pred": "SELECT DISTINCT s.Country\nFROM singer s\nWHERE (s.Age > 40 OR s.Age < 30)",
+      "msg": ""
+    },
+    {
+      "i": 35,
+      "db": "concert_singer",
+      "kind": "WRONG",
+      "q": "List singer names and number of concerts for each singer.",
+      "gold": "SELECT T2.name ,  count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id GROUP BY T2.singer_id",
+      "pred": "SELECT s.Name, COUNT(sc.concert_ID) AS concert_count\nFROM singer s\nLEFT JOIN singer_in_concert sc ON s.Singer_ID = sc.Singer_ID\nGROUP BY s.Singer_ID, s.Name",
+      "msg": ""
+    },
+    {
+      "i": 36,
+      "db": "concert_singer",
+      "kind": "WRONG",
+      "q": "What are the names of the singers and number of concerts for each person?",
+      "gold": "SELECT T2.name ,  count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id GROUP BY T2.singer_id",
+      "pred": "SELECT s.Name, COUNT(sic.concert_ID) AS concert_count\nFROM singer s\nLEFT JOIN singer_in_concert sic ON s.Singer_ID = sic.Singer_ID\nGROUP BY s.Singer_ID, s.Name",
+      "msg": ""
+    },
+    {
+      "i": 49,
+      "db": "pets_1",
+      "kind": "EXEC_ERR",
+      "q": "Find the maximum weight for each type of pet. List the maximum weight and pet type.",
+      "gold": "SELECT max(weight) ,  petType FROM pets GROUP BY petType",
+      "pred": "SELECT pet_type, MAX(weight) AS max_weight FROM Pets GROUP BY pet_type",
+      "msg": "no such column: pet_type"
+    },
+    {
+      "i": 50,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "List the maximum weight and type for each type of pet.",
+      "gold": "SELECT max(weight) ,  petType FROM pets GROUP BY petType",
+      "pred": "SELECT PetType, MAX(weight) AS max_weight FROM Pets GROUP BY PetType",
+      "msg": ""
+    },
+    {
+      "i": 57,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "Find the first name of students who have cat or dog pet.",
+      "gold": "SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog'",
+      "pred": "SELECT s.Fname FROM Student s JOIN Has_Pet hp ON s.StuID = hp.StuID JOIN Pets p ON hp.PetID = p.PetID WHERE p.PetType IN ('cat','dog')",
+      "msg": ""
+    },
+    {
+      "i": 58,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "What are the first names of every student who has a cat or dog as a pet?",
+      "gold": "SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog'",
+      "pred": "SELECT S.Fname FROM Student S JOIN Has_Pet HP ON S.StuID = HP.StuID JOIN Pets P ON HP.PetID = P.PetID WHERE P.PetType IN ('cat','dog')",
+      "msg": ""
+    },
+    {
+      "i": 64,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "What are the ids of the students who do not own cats as pets?",
+      "gold": "SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat'",
+      "pred": "SELECT Student.StuID FROM Student LEFT JOIN Has_Pet ON Student.StuID = Has_Pet.StuID LEFT JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType <> 'cat' OR Pets.PetType IS NULL",
+      "msg": ""
+    },
+    {
+      "i": 66,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "What is the first name of every student who has a dog but does not have a cat?",
+      "gold": "SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')",
+      "pred": "SELECT S.Fname\nFROM Student S\nWHERE EXISTS (\n    SELECT 1\n    FROM Has_Pet HP\n    JOIN Pets P ON HP.PetID = P.PetID\n    WHERE HP.StuID = S.StuID AND P.PetType = 'dog'\n)\nAND NOT EXISTS (\n    SELECT 1\n    FROM Has_Pet HP\n    JOIN Pets P ON HP.PetID = P.PetID\n    WHERE HP.StuID = S.StuID AND P.PetType = 'cat'\n)",
+      "msg": ""
+    },
+    {
+      "i": 71,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "Find the average and maximum age for each type of pet.",
+      "gold": "SELECT avg(pet_age) ,  max(pet_age) ,  pettype FROM pets GROUP BY pettype",
+      "pred": "SELECT PetType, AVG(pet_age) AS avg_age, MAX(pet_age) AS max_age FROM Pets GROUP BY PetType",
+      "msg": ""
+    },
+    {
+      "i": 72,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "What is the average and maximum age for each pet type?",
+      "gold": "SELECT avg(pet_age) ,  max(pet_age) ,  pettype FROM pets GROUP BY pettype",
+      "pred": "SELECT PetType, AVG(pet_age) AS avg_age, MAX(pet_age) AS max_age FROM Pets GROUP BY PetType",
+      "msg": ""
+    },
+    {
+      "i": 73,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "Find the average weight for each pet type.",
+      "gold": "SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype",
+      "pred": "SELECT PetType, AVG(weight) AS average_weight FROM Pets GROUP BY PetType",
+      "msg": ""
+    },
+    {
+      "i": 74,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "What is the average weight for each type of pet?",
+      "gold": "SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype",
+      "pred": "SELECT PetType, AVG(weight) AS average_weight FROM Pets GROUP BY PetType",
+      "msg": ""
+    },
+    {
+      "i": 75,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "Find the first name and age of students who have a pet.",
+      "gold": "SELECT DISTINCT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid",
+      "pred": "SELECT S.Fname, S.Age FROM Student S JOIN Has_Pet HP ON S.StuID = HP.StuID",
+      "msg": ""
+    },
+    {
+      "i": 79,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "Find the number of pets for each student who has any pet and student id.",
+      "gold": "SELECT count(*) ,  T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid",
+      "pred": "SELECT Has_Pet.StuID, COUNT(*) AS pet_count\nFROM Has_Pet\nGROUP BY Has_Pet.StuID\nHAVING COUNT(*) > 0",
+      "msg": ""
+    },
+    {
+      "i": 80,
+      "db": "pets_1",
+      "kind": "WRONG",
+      "q": "For students who have pets , how many pets does each student have ? list their ids instead of names .",
+      "gold": "select count(*) ,  t1.stuid from student as t1 join has_pet as t2 on t1.stuid  =  t2.stuid group by t1.stuid",
+      "pred": "SELECT Has_Pet.StuID, COUNT(*) AS pet_count\nFROM Has_Pet\nGROUP BY Has_Pet.StuID",
+      "msg": ""
+    },
+    {
+      "i": 93,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "How many models does each car maker produce? List maker full name, id and the number.",
+      "gold": "SELECT T1.FullName ,  T1.Id ,  count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id;",
+      "pred": "SELECT cm.Id, cm.FullName, COUNT(ml.Model) AS model_count\nFROM car_makers cm\nLEFT JOIN model_list ml ON ml.Maker = cm.Id\nGROUP BY cm.Id, cm.FullName",
+      "msg": ""
+    },
+    {
+      "i": 94,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "What is the full name of each car maker, along with its id and how many models it produces?",
+      "gold": "SELECT T1.FullName ,  T1.Id ,  count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id;",
+      "pred": "SELECT cm.Id, cm.FullName, COUNT(ml.Model) AS ModelCount\nFROM car_makers cm\nLEFT JOIN model_list ml ON ml.Maker = cm.Id\nGROUP BY cm.Id, cm.FullName",
+      "msg": ""
+    },
+    {
+      "i": 95,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "Which model of the car has the minimum horsepower?",
+      "gold": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.horsepower ASC LIMIT 1;",
+      "pred": "SELECT ml.Model FROM model_list ml JOIN cars_data cd ON cd.Id = ml.ModelId ORDER BY CAST(cd.Horsepower AS REAL) ASC LIMIT 1",
+      "msg": ""
+    },
+    {
+      "i": 96,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "What is the model of the car with the smallest amount of horsepower?",
+      "gold": "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.horsepower ASC LIMIT 1;",
+      "pred": "SELECT ml.Model\nFROM model_list ml\nJOIN car_names cn ON ml.Model = cn.Model\nJOIN cars_data cd ON cn.MakeId = cd.Id\nORDER BY CAST(cd.Horsepower AS INTEGER) ASC\nLIMIT 1",
+      "msg": ""
+    },
+    {
+      "i": 97,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "Find the model of the car whose weight is below the average weight.",
+      "gold": "SELECT T1.model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Weight  <  (SELECT avg(Weight) FROM CARS_DATA)",
+      "pred": "SELECT model_list.Model\nFROM model_list\nJOIN car_names ON model_list.Model = car_names.Model\nJOIN cars_data ON car_names.MakeId = cars_data.Id\nWHERE cars_data.Weight < (SELECT AVG(Weight) FROM cars_data)",
+      "msg": ""
+    },
+    {
+      "i": 98,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "What is the model for the car with a weight smaller than the average?",
+      "gold": "SELECT T1.model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id WHERE T2.Weight  <  (SELECT avg(Weight) FROM CARS_DATA)",
+      "pred": "SELECT model_list.Model\nFROM cars_data\nJOIN model_list ON cars_data.Id = model_list.ModelId\nWHERE cars_data.Weight < (SELECT AVG(Weight) FROM cars_data)",
+      "msg": ""
+    },
+    {
+      "i": 99,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "Find the name of the makers that produced some cars in the year of 1970?",
+      "gold": "SELECT DISTINCT T1.Maker FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker JOIN CAR_NAMES AS T3 ON T2.model  =  T3.model JOIN CARS_DATA AS T4 ON T3.MakeId  =  T4.id WHERE T4.year  =  '1970';",
+      "pred": "SELECT cm.Maker FROM car_makers cm JOIN cars_data cd ON cd.Id = cm.Id WHERE cd.Year = 1970",
+      "msg": ""
+    },
+    {
+      "i": 101,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "Find the make and production time of the cars that were produced in the earliest year?",
+      "gold": "SELECT T2.Make ,  T1.Year FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T1.Year  =  (SELECT min(YEAR) FROM CARS_DATA);",
+      "pred": "SELECT car_makers.Maker, cars_data.Year\nFROM cars_data\nJOIN car_names ON cars_data.Id = car_names.MakeId\nJOIN car_makers ON car_names.Make = car_makers.Maker\nWHERE cars_data.Year = (SELECT MIN(Year) FROM cars_data)",
+      "msg": ""
+    },
+    {
+      "i": 102,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "What is the maker of the carr produced in the earliest year and what year was it?",
+      "gold": "SELECT T2.Make ,  T1.Year FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T1.Year  =  (SELECT min(YEAR) FROM CARS_DATA);",
+      "pred": "SELECT cm.Maker, cd.Year \nFROM cars_data cd \nJOIN car_names cn ON cd.Id = cn.MakeId \nJOIN car_makers cm ON cn.Make = cm.Maker \nORDER BY cd.Year ASC \nLIMIT 1",
+      "msg": ""
+    },
+    {
+      "i": 106,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "What is the name of each continent and how many car makers are there in each one?",
+      "gold": "SELECT T1.Continent ,  count(*) FROM CONTINENTS AS T1 JOIN COUNTRIES AS T2 ON T1.ContId  =  T2.continent JOIN car_makers AS T3 ON T2.CountryId  =  T3.Country GROUP BY T1.Continent;",
+      "pred": "SELECT continents.Continent, COUNT(car_makers.Id) AS maker_count\nFROM continents\nLEFT JOIN countries ON countries.Continent = continents.ContId\nLEFT JOIN car_makers ON car_makers.Country = countries.CountryId\nGROUP BY continents.Continent",
+      "msg": ""
+    },
+    {
+      "i": 109,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "How many car models are produced by each maker ? Only list the count and the maker full name .",
+      "gold": "select count(*) ,  t2.fullname from model_list as t1 join car_makers as t2 on t1.maker  =  t2.id group by t2.id;",
+      "pred": "SELECT cm.FullName, COUNT(m.Model) AS model_count\nFROM car_makers cm\nJOIN model_list m ON m.Maker = cm.Id\nGROUP BY cm.FullName",
+      "msg": ""
+    },
+    {
+      "i": 110,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "What is the number of car models that are produced by each maker and what is the id and full name of each maker?",
+      "gold": "SELECT Count(*) ,  T2.FullName ,  T2.id FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id;",
+      "pred": "SELECT cm.Id, cm.FullName, COUNT(DISTINCT ml.Model) AS ModelCount\nFROM car_makers cm\nLEFT JOIN model_list ml ON ml.Maker = cm.Id\nGROUP BY cm.Id, cm.FullName",
+      "msg": ""
+    },
+    {
+      "i": 111,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "What is the accelerate of the car make amc hornet sportabout (sw)?",
+      "gold": "SELECT T1.Accelerate FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T2.Make  =  'amc hornet sportabout (sw)';",
+      "pred": "SELECT cd.Accelerate\nFROM cars_data cd\nJOIN car_names cn ON cd.Id = cn.MakeId\nJOIN car_makers cm ON cn.Make = cm.Maker\nWHERE cm.Maker = 'amc' AND cn.Model = 'hornet sportabout (sw)'",
+      "msg": ""
+    },
+    {
+      "i": 112,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "How much does the car accelerate that makes amc hornet sportabout (sw)?",
+      "gold": "SELECT T1.Accelerate FROM CARS_DATA AS T1 JOIN CAR_NAMES AS T2 ON T1.Id  =  T2.MakeId WHERE T2.Make  =  'amc hornet sportabout (sw)';",
+      "pred": "SELECT c.Accelerate\nFROM cars_data c\nJOIN car_names n ON c.Id = n.MakeId\nJOIN car_makers m ON n.Make = m.Maker\nWHERE m.Maker = 'amc' AND n.Model = 'hornet sportabout (sw)'",
+      "msg": ""
+    },
+    {
+      "i": 113,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "How many car makers are there in france?",
+      "gold": "SELECT count(*) FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'france';",
+      "pred": "SELECT COUNT(*) FROM car_makers cm JOIN countries c ON cm.Country = c.CountryId WHERE c.CountryName = 'France'",
+      "msg": ""
+    },
+    {
+      "i": 114,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "What is the number of makers of care in France?",
+      "gold": "SELECT count(*) FROM CAR_MAKERS AS T1 JOIN COUNTRIES AS T2 ON T1.Country  =  T2.CountryId WHERE T2.CountryName  =  'france';",
+      "pred": "SELECT COUNT(DISTINCT cm.Id) AS maker_count\nFROM car_makers cm\nJOIN countries c ON cm.Country = c.CountryId\nWHERE c.CountryName = 'France'",
+      "msg": ""
+    },
+    {
+      "i": 115,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "How many car models are produced in the usa?",
+      "gold": "SELECT count(*) FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id JOIN COUNTRIES AS T3 ON T2.Country  =  T3.CountryId WHERE T3.CountryName  =  'usa';",
+      "pred": "SELECT COUNT(DISTINCT ml.Model) AS model_count\nFROM model_list ml\nJOIN car_makers cm ON ml.Maker = cm.Id\nJOIN countries c ON cm.Country = c.CountryId\nWHERE c.CountryName = 'USA'",
+      "msg": ""
+    },
+    {
+      "i": 116,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "What is the count of the car models produced in the United States?",
+      "gold": "SELECT count(*) FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id JOIN COUNTRIES AS T3 ON T2.Country  =  T3.CountryId WHERE T3.CountryName  =  'usa';",
+      "pred": "SELECT COUNT(DISTINCT ml.Model) AS model_count\nFROM model_list ml\nJOIN car_makers cm ON ml.Maker = cm.Id\nJOIN countries c ON cm.Country = c.CountryId\nWHERE c.CountryName = 'United States'",
+      "msg": ""
+    },
+    {
+      "i": 121,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "What are all the makers and models?",
+      "gold": "SELECT Maker ,  Model FROM MODEL_LIST;",
+      "pred": "SELECT cm.Maker, ml.Model FROM car_makers cm JOIN model_list ml ON cm.Id = ml.Maker",
+      "msg": ""
+    },
+    {
+      "i": 122,
+      "db": "car_1",
+      "kind": "WRONG",
+      "q": "What are the makers and models?",
+      "gold": "SELECT Maker ,  Model FROM MODEL_LIST;",
+      "pred": "SELECT cm.Maker, ml.Model FROM car_makers cm JOIN model_list ml ON cm.Id = ml.Maker",
+      "msg": ""
+    }
+  ]
+}

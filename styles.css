@@ -1,0 +1,153 @@
+:root {
+  --bg: #0e1116;
+  --panel: #161b22;
+  --panel-2: #1b2230;
+  --line: #2a3140;
+  --ink: #e6edf3;
+  --muted: #8b97a7;
+  --accent: #6ea8fe;
+  --kw: #ff7b9c;
+  --fn: #c699ff;
+  --str: #7ee0a7;
+  --num: #ffcf6e;
+  --ident: #e6edf3;
+  --punct: #8b97a7;
+  --enter: #1f7a45;
+  --exit: #7a2a36;
+  --rewrite: #b5740f;
+  --good: #3fb950;
+  --bad: #d98a3a;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wrap { max-width: 960px; margin: 0 auto; padding: 14px 20px 22px; }
+
+.head h1 { margin: 0 0 3px; font-size: 22px; letter-spacing: -0.01em; }
+.tag { margin: 0 0 10px; color: var(--muted); max-width: 80ch; font-size: 13px; line-height: 1.4; }
+
+.controls { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+.mode-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+.seg { display: inline-flex; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.seg-btn { background: transparent; color: var(--muted); border: 0; padding: 8px 14px; font-size: 13px; cursor: pointer; }
+.seg-btn.on { background: var(--panel-2); color: var(--ink); }
+.seg-btn + .seg-btn { border-left: 1px solid var(--line); }
+
+.play-bar, .live-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.btn { background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; font-size: 13px; cursor: pointer; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: #0a0d12; border-color: var(--accent); font-weight: 600; }
+.speed { color: var(--muted); font-size: 12px; display: inline-flex; gap: 8px; align-items: center; }
+
+.key-input { flex: 1; min-width: 240px; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; font-size: 13px; }
+.live-status { color: var(--muted); font-size: 12px; }
+
+.english-panel { margin-bottom: 10px; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+@media (max-width: 760px) { .compare { grid-template-columns: 1fr; } }
+
+.good-panel { border-color: color-mix(in srgb, var(--good) 40%, var(--line)); }
+.bad-panel { border-color: color-mix(in srgb, var(--bad) 40%, var(--line)); }
+.badge { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 7px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+.badge.good { background: color-mix(in srgb, var(--good) 22%, transparent); color: var(--good); }
+.badge.bad { background: color-mix(in srgb, var(--bad) 22%, transparent); color: var(--bad); }
+.cap { padding: 5px 14px 7px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
+.good-cap { color: color-mix(in srgb, var(--good) 70%, var(--muted)); }
+.bad-cap { color: color-mix(in srgb, var(--bad) 75%, var(--muted)); }
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.panel-head { padding: 6px 14px; border-bottom: 1px solid var(--line); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+.hint { text-transform: none; letter-spacing: 0; color: var(--muted); font-size: 12px; }
+
+.english-box, .live-input { padding: 8px 14px; min-height: 0; font-size: 13px; line-height: 1.3; white-space: pre-wrap; }
+.english-box .typed-line { display: block; }
+.english-box .lead { color: var(--ink); }
+.english-box .refine { color: var(--accent); }
+.caret { display: inline-block; width: 8px; margin-left: 1px; background: var(--accent); animation: blink 1s steps(2) infinite; }
+.caret::after { content: "\00a0"; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.live-input { width: 100%; border: 0; background: transparent; color: var(--ink); resize: vertical; font: inherit; outline: none; }
+
+.sql-box { margin: 0; padding: 10px 14px; min-height: 150px; font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; font-size: 13px; line-height: 1.35; white-space: pre-wrap; word-break: break-word; }
+.result .panel-head { text-transform: uppercase; }
+.result-box { padding: 4px 0 0; overflow-x: auto; }
+.running { display: flex; align-items: center; gap: 9px; padding: 18px 14px; color: var(--muted); font-size: 13px; animation: pulse 1.3s ease-in-out infinite; }
+.run-spinner { width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--line); border-top-color: var(--accent); animation: spin 0.7s linear infinite; display: inline-block; }
+.run-note { padding: 4px 14px; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.run-note.err { color: var(--bad); border-bottom: 0; }
+
+.diffstat { font-size: 11px; color: var(--muted); text-transform: none; letter-spacing: 0; }
+.diffstat b { color: var(--str); font-weight: 600; }
+.diffstat i { color: var(--accent); font-style: normal; font-weight: 600; }
+.diffstat u { color: var(--bad); text-decoration: none; font-weight: 600; }
+
+/* token colors */
+.t-kw { color: var(--kw); }
+.t-fn { color: var(--fn); }
+.t-str { color: var(--str); }
+.t-num { color: var(--num); }
+.t-ident { color: var(--ident); }
+.t-punct { color: var(--punct); }
+.tok { border-radius: 3px; }
+
+/* in-place: only changed tokens light up, and the highlight lingers so the eye
+   lands on exactly what moved. Everything else is rock steady. */
+.tok.enter {
+  animation: enter 1500ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  border-radius: 4px;
+}
+.tok.settle { transition: background 900ms ease, box-shadow 900ms ease; background: transparent; box-shadow: none; }
+@keyframes enter {
+  0%   { opacity: 0; transform: translateY(-7px) scale(0.94); background: var(--enter); box-shadow: 0 0 0 4px color-mix(in srgb, var(--enter) 60%, transparent); }
+  22%  { opacity: 1; transform: translateY(0) scale(1); }
+  70%  { background: var(--enter); box-shadow: 0 0 0 3px color-mix(in srgb, var(--enter) 45%, transparent); }
+  100% { background: color-mix(in srgb, var(--enter) 32%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--enter) 24%, transparent); }
+}
+.tok.exit { display: inline-block; animation: exit 420ms ease both; background: color-mix(in srgb, var(--exit) 70%, transparent); border-radius: 4px; }
+@keyframes exit { to { opacity: 0; transform: translateY(4px) scale(0.85); } }
+
+/* full rewrite: faithful to real NL2SQL tools. A spinner while the model runs,
+   then the whole query streams in token by token behind a generation caret.
+   No reuse — every refinement pays the full latency again. */
+.gen-spinner {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px; color: var(--muted); animation: pulse 1.3s ease-in-out infinite;
+}
+.gen-spinner::before {
+  content: ""; width: 13px; height: 13px; border-radius: 50%;
+  border: 2px solid var(--line); border-top-color: var(--accent);
+  animation: spin 0.7s linear infinite;
+}
+.gen-spinner::after { content: "…"; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 50% { opacity: 0.55; } }
+.stream-caret {
+  display: inline-block; width: 7px; height: 1.05em; vertical-align: text-bottom;
+  background: var(--accent); margin-left: 1px; animation: blink 1s steps(2) infinite;
+}
+
+/* result table */
+table.res { border-collapse: collapse; width: 100%; font-size: 13px; }
+table.res th, table.res td { text-align: left; padding: 4px 14px; border-bottom: 1px solid var(--line); }
+table.res th { color: var(--muted); font-weight: 600; }
+table.res td { font-family: "SF Mono", ui-monospace, Menlo, monospace; }
+.result-box.swap { animation: swap 380ms ease; }
+@keyframes swap { from { opacity: 0.2; } to { opacity: 1; } }
+
+.foot { margin-top: 18px; }
+.hidden { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tok.enter, .tok.exit, .result-box.swap, .caret, .gen-spinner, .gen-spinner::before, .stream-caret { animation: none; }
+}

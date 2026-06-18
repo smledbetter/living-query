@@ -1,0 +1,17 @@
+{
+  "mercury-2": {
+    "n": 30,
+    "median_ttft_ms": 334,
+    "median_total_ms": 337
+  },
+  "haiku-4.5": {
+    "n": 30,
+    "median_ttft_ms": 534,
+    "median_total_ms": 1055
+  },
+  "opus-4.8": {
+    "n": 30,
+    "median_ttft_ms": 1341,
+    "median_total_ms": 2340
+  }
+}
