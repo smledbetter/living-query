@@ -2,6 +2,10 @@
 
 Refine a SQL query in plain English and stay in flow. On the left it reforms in place, pinning the tokens that did not change. On the right it is rewritten from scratch, the way a normal text-to-SQL tool does it — you submit, wait, and re-read a fresh query every time.
 
+![Living Query: the same refinements on the left reform the query in place, only the changed clause moves; on the right a typical tool blanks the box and retypes the whole query from scratch.](assets/living-query-1-fast-vs-typical.gif)
+
+*Left: Mercury 2, in place. Right: a typical full-rewrite tool. Same refinements, same data.*
+
 We do not think enough about how much staying in flow matters during data analysis. This is a small trick for it, running over a real benchmark table: `blogs.noaa` on the public [ClickHouse playground](https://clickhouse.com/docs/getting-started/playground), about 1.08 billion rows of global daily weather. The result rows are real.
 
 ## Why this is feasible
