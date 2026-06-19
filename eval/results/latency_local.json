@@ -1,0 +1,16 @@
+[
+  {
+    "model": "Qwen2.5-Coder-3B-Instruct-4bit",
+    "n": 30,
+    "median_total_ms": 4707,
+    "median_ttft_ms": 1359,
+    "median_decode_tps": 25
+  },
+  {
+    "model": "Qwen2.5-Coder-7B-Instruct-4bit",
+    "n": 30,
+    "median_total_ms": 7708,
+    "median_ttft_ms": 2875,
+    "median_decode_tps": 11
+  }
+]
